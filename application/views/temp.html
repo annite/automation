@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-1 column">
+        </div>
+        <div class="col-md-10 column">
+            <div class="row clearfix">
+                <div class="col-md-5 column">
+                    <div class="carousel slide" id="carousel-153822">
+                        <ol class="carousel-indicators">
+                            <li class="active" data-slide-to="0" data-target="#carousel-153822">
+                            </li>
+                            <li data-slide-to="1" data-target="#carousel-153822">
+                            </li>
+                            <li data-slide-to="2" data-target="#carousel-153822">
+                            </li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img alt="" src="http://lorempixel.com/1600/500/sports/1" />
+
+                            </div>
+                            <div class="item">
+                                <img alt="" src="http://lorempixel.com/1600/500/sports/2" />
+
+                            </div>
+                            <div class="item">
+                                <img alt="" src="http://lorempixel.com/1600/500/sports/3" />
+
+                            </div>
+                        </div>
+                        <a class="left carousel-control" href="#carousel-153822" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-153822" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                    </div>
+                </div>
+                <div class="col-md-7 column">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1 column">
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+if(price=="Not Available")
+$(".product-detail").append('<div id="'+id+'" class="col-md-12 column"><div class="row clearfix"><div class="col-md-5 column"><a href="" class="thumbnail"><img class="img-responsive" data-src="holder.js/100%x180" alt="Image not available" src="'+image+'" width="100%"></a></div><div class="col-md-7 column"><h3>'+title+'</h3><h4>'+manufacturer+'</h4><h4 style="color: red">Currently Unavailable</h4><dl><dt>Description</dt><dd>'+desc+'</dd></dl><p style="padding-top: 10%;"><a class="btn btn-primary add-to-cart" disabled role="button">Unavailable</a></p></div></div></div>');
+else
+$(".product-detail").append('<div id="'+id+'" class="col-md-12 column"><div class="row clearfix"><div class="col-md-5 column"><a href="" class="thumbnail"><img class="img-responsive" data-src="holder.js/100%x180" alt="Image not available" src="'+image+'" width="100%"></a></div><div class="col-md-7 column"><h3>'+title+'</h3><h4>'+manufacturer+'</h4><h4>'+price+'</h4><dl><dt>Description</dt><dd>'+desc+'</dd></dl><p style="padding-top: 10%;"><a class="btn btn-primary add-to-cart" onclick="addToCart(this)" role="button">Add to Cart</a></p></div></div></div>');
+
+
+<div class="col-md-12 column">
+    <h3>
+        <center><u>Top Selling Products</u></center>
+    </h3>
+    <div class="row clearfix">
+        <div class="col-md-12 column similiar-product-list">undefined
+            <div id="B00LGJ8JT8" class="col-md-3 column">
+                <div class="thumbnail">
+                    <div class="product" onclick="product_click(this)">
+                        <center>
+                            <div class="productImageWrapper"><img data-src="holder.js/100%x200"
+                                                                  alt="Image not available"
+                                                                  src="http://ecx.images-amazon.com/images/I/418nWf4p6iL._SL160_.jpg">
+                            </div>
+                        </center>
+                        <div class="caption"><h4>Hp 15-r062tu sparkling black with laptop bag...</h4><h5>INR
+                            32,021.00</h5>
+
+                            <p>by hp...</p></div>
+                    </div>
+                    <p><a class="btn btn-primary add-to-cart" role="button" onclick="addToCart(this)">Add to Cart</a>
+                    </p></div>
+                <div id="B00LGMG27G" class="col-md-3 column">
+                    <div class="thumbnail">
+                        <div class="product" onclick="product_click(this)">
+                            <center>
+                                <div class="productImageWrapper"><img data-src="holder.js/100%x200"
+                                                                      alt="Image not available" src=""></div>
+                            </center>
+                            <div class="caption"><h4>Dell inspiron 3542 15.6 -inch laptop (silver) without laptop
+                                bag...</h4><h5>INR 37,122.00</h5>
+
+                                <p>by Dell Compute...</p></div>
+                        </div>
+                        <p><a class="btn btn-primary add-to-cart" role="button" onclick="addToCart(this)">Add to
+                            Cart</a></p></div>
+                    <div id="B00L370ZU4" class="col-md-3 column">
+                        <div class="thumbnail">
+                            <div class="product" onclick="product_click(this)">
+                                <center>
+                                    <div class="productImageWrapper"><img data-src="holder.js/100%x200"
+                                                                          alt="Image not available" src=""></div>
+                                </center>
+                                <div class="caption"><h4>Dell latitude 3540 15.6-inch laptop (grey) with laptop
+                                    bag...</h4><h5>INR 39,398.00</h5>
+
+                                    <p>by Dell Compute...</p></div>
+                            </div>
+                            <p><a class="btn btn-primary add-to-cart" role="button" onclick="addToCart(this)">Add to
+                                Cart</a></p></div>
+                        <div id="B00JE9DJOC" class="col-md-3 column">
+                            <div class="thumbnail">
+                                <div class="product" onclick="product_click(this)">
+                                    <center>
+                                        <div class="productImageWrapper"><img data-src="holder.js/100%x200"
+                                                                              alt="Image not available" src=""></div>
+                                    </center>
+                                    <div class="caption"><h4>Dell new inspiron 15 w560371in9 15.6-inch laptop (black)
+                                        without laptop bag...</h4><h5>INR 30,900.00</h5>
+
+                                        <p>by Dell Compute...</p></div>
+                                </div>
+                                <p><a class="btn btn-primary add-to-cart" role="button" onclick="addToCart(this)">Add to
+                                    Cart</a></p></div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+    "<span class="imdbRatingPlugin" data-user="ur46378945" data-title="tt0405676" data-style="p1"><img src="http://g-ecx.images-amazon.com/images/G/01/imdb/plugins/rating/images/imdb_46x22.png" alt="All the King's Men (2006) on IMDb" /> </span><script>(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="http://g-ec2.images-amazon.com/images/G/01/imdb/plugins/rating/js/rating.min.js";stags.parentNode.insertBefore(js,stags);})(document,'script','imdb-rating-api');</script><br><br>Oscar-winning actor Sean Penn (Best Actor, Mystic River, 2003), two-time Academy Award nominee Jude Law (Best Supporting Actor, The Talented Mr. Ripley, 1999; Best Actor, Cold Mountain, 2003), four-time Academy Award nominee Kate Winslet (Best Supporting Actress, Sense and Sensibility, 1995; Iris, 2001, Best Actress, Titanic, 1997; Eternal Sunshine of the Spotless Mind, 2004), and Oscar winner Anthony Hopkins (Best Actor, The Silence of the Lambs, 1991) star in this riveting story of a humble man's rise to political power and the destructive force of corruption and betrayal that would ultimately unravel his soul, based on Robert Penn Warren's 1946 classic Pulitzer Prize-winning novel. Willie Stark (Penn) is an ordinary man from a rural town, demanding that crooked politicians and shady businessmen in Lousiana be held accountable for the collapse of a poorly built school. Urged to run for Governor by a dubious political advisor, Tiny Duffy (three-time Emmy Award winner James Gandolfini, Lead Actor in a Drama Series, "The Sopranos", 2000, 2001, 2003) Stark, finds his voice as a charismatic man of the people. He then befriends a young idealistic journalist, Jack Burden (Law), who eventually ends up working for him. But when Stark asks Burden to dig deep for damaging information on an old family friend, Judge Montague Irwin (Hopkins), Burden begins to question his own morality and Stark's surprising transformation into an inflexible leader that will stop at nothing to remain in power."
