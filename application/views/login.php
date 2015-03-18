@@ -114,11 +114,12 @@
                 </div>
                 <div class="modal-body">
                     <form class="OTP-form">
-                        OTP : <input type="password" id="OTPVal" name="OTP" class="form-control" placeholder="Enter One Time Password(OTP)"/><br>
+                        OTP : <input type="password" id="OTPVal" name="OTPVal" class="form-control" placeholder="Enter One Time Password(OTP)"/><br>
                 </div>
                 <div class="modal-footer">
 <!--                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>-->
                     <input type="submit" id="continue" class="btn btn-primary" value="Continue Login"/>
+                    <span id="OTPAlert"></span>
                     </form>
                 </div>
             </div>

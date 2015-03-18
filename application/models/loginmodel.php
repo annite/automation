@@ -73,4 +73,12 @@ class LoginModel extends CI_Model{
         else
             return false;
     }
+    public function getOTP($email_id) {
+        $email_id=$this->db->escape($email_id);
+        $query=$this->db->query("select OTP from login where user_email={$email_id}");
+        if($query->result())
+            return $query->result();
+        else
+            return false;
+    }
 }

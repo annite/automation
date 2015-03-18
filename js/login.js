@@ -4,10 +4,11 @@
 
 
 
-
+var email_id="";
 $(".login-form").submit(function(e){
     e.preventDefault();
     $("#login").attr("disabled","disabled");
+    email_id=$('#email_id').val();
     $.ajax({
         url:base_url+"index.php/login/verifyUser",
         type: "POST",
@@ -44,6 +45,46 @@ $(".login-form").submit(function(e){
                 $("#login").removeAttr("disabled");
                 $(".forgot").append('<div class="alert alert-success modalert" role="alert" style="background-color: red;padding:3px;text-align: center"></div>');
                 $(".modalert").text("Invalid Credentials").show().fadeOut(2000);
+                setTimeout(function(){$(".modalert").remove()},2000);
+            }
+        }
+    });
+});
+
+
+
+
+
+
+
+$(".OTP-form").submit(function(e){
+    e.preventDefault();
+    $("#continue").attr("disabled","disabled");
+    $.ajax({
+        url:base_url+"index.php/login/verifyOTP",
+        type: "POST",
+        data:  {OTP:$("#OTPVal").val(),email_id:email_id},
+//        contentType: false,
+//        cache: false,
+//        processData:false,
+
+        success:function($data){
+            if($data=="success"){
+//                alert("success");
+                // $("#modal-alert").css("visibility","visible");
+                // $(".modalert").css("visibility","visible");
+                $("#OTPAlert").append('<div class="alert alert-success modalert" role="alert" style="background-color: green;padding:3px;text-align: center"></div>');
+                $(".modalert").text("Successfully logged in").show().fadeOut(2000);
+                $("#continue").removeAttr("disabled");
+                setTimeout(function(){ window.location.assign(base_url+"index.php/home");$(".modalert").remove()},2000);
+            }
+            if($data=="failure"){
+//                alert("failure");
+//                $(".modal-body").prepend('<br><div class="alert alert-danger modalert" role="alert" style="background-color: red;padding:3px"></div>');
+//                $(".modalert").text("Invalid Credentials").show().fadeOut(2000);
+                $("#continue").removeAttr("disabled");
+                $("#OTPAlert").append('<div class="alert alert-success modalert" role="alert" style="background-color: red;padding:3px;text-align: center"></div>');
+                $(".modalert").text("Invalid OTP").show().fadeOut(2000);
                 setTimeout(function(){$(".modalert").remove()},2000);
             }
         }
@@ -127,6 +168,19 @@ $(".forgot-email-form").submit(function(e){
 //        }
 //    }
 //});
+document.querySelector("#continue").addEventListener("click",function(b){
+    if (document.querySelector("#OTPVal").value === "") {
+        document.querySelector("#OTPVal").style.borderColor = "#B81B1B";
+        document.querySelector("#OTPVal").placeholder = "Please Enter One Time Password(OTP)";
+        document.querySelector("#OTPVal").focus();
+        b.preventDefault();
+    }
+});
+document.querySelector("#OTPVal").addEventListener("click",function(b){
+    if (b.target.className === "form-control") {
+        b.target.style.borderColor = "";
+    }
+});
 document.querySelector("#sendlink").addEventListener("click",function(b){
     if (document.querySelector("#emailforgot").value === "") {
         document.querySelector("#emailforgot").style.borderColor = "#B81B1B";

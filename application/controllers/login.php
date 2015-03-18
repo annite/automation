@@ -21,6 +21,21 @@ Class Login extends CI_Controller{
         else
             $this->load->view('welcome_message');
     }
+    public function verifyOTP() {
+        $OTP=$this->input->post('OTP');
+        $email_id=$this->input->post('email_id');
+        $result=$this->loginModel->getOTP($email_id,$OTP); //returns the record of the given username
+        if($result[0]->OTP===$OTP) {
+            $sessiondata=array( //creates session data
+                "session_id" => 1,
+                "session_name" => $email_id,
+            );
+            $this->session->set_userdata($sessiondata);
+            $this->loginModel->setOTP($email_id,NULL);
+            echo "success";
+        }else
+            echo "failure";
+    }
     public function verifyUser(){
 //        print_r($this->session->userdata("session_name"));
         if(!($this->session->userdata("session_id")&&$this->session->userdata("session_name")))
