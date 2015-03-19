@@ -30,7 +30,7 @@
 </head>
 
 
-<body style="background-image: url('../../pics/fishes.jpg')">
+<body style="background-image: url('<?php echo base_url()?>/pics/fishes.jpg')">
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">

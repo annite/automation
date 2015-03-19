@@ -30,7 +30,7 @@ class Home extends CI_Controller {
 //        );
 //
 //        $this->load->view('templates/home', $data);
-        $this->load->view('welcome_message');
+        $this->load->view('Employee');
     }
 
     private function getUserId(){
