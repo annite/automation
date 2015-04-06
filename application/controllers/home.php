@@ -4,7 +4,8 @@ class Home extends CI_Controller {
 
     var $info=array();
     var $user_id;
-    function __construct(){ //loads all the required code igniter libraies as the controller is loaded
+    function __construct()
+    { //loads all the required code igniter libraies as the controller is loaded
         parent::__construct();
 //        $this->load->library('amazon_api');
 //        $this->load->model('visitor');
@@ -30,9 +31,33 @@ class Home extends CI_Controller {
 //        );
 //
 //        $this->load->view('templates/home', $data);
-        $this->load->view('Employee');
-    }
 
+        $this->incoming();
+    }
+    public function incoming(){
+        if (!($this->session->userdata("session_id") && $this->session->userdata("session_name"))) {
+//            $this->load->view('login');
+            redirect('login');
+        }
+        else {
+            $data['active'] = "incoming";
+            $this->load->view('header', $data);
+            $this->load->view('incoming');
+            //        $this->load->view('footer');
+        }
+    }
+    public function outgoing(){
+        if (!($this->session->userdata("session_id") && $this->session->userdata("session_name"))) {
+//            $this->load->view('login');
+            redirect('login');
+        }
+        else {
+            $data['active'] = "outgoing";
+            $this->load->view('header', $data);
+            $this->load->view('outgoing');
+        }
+//        $this->load->view('footer');
+    }
     private function getUserId(){
         if(($this->session->userdata("session_id")&&$this->session->userdata("session_name"))){
             return $this->session->userdata("session_name");
