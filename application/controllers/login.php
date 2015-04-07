@@ -18,8 +18,11 @@ Class Login extends CI_Controller{
     {
         if(!($this->session->userdata("session_id")&&$this->session->userdata("session_name")))
            $this->load->view('login');
-        else
+        else {
+            $data['active'] = "incoming";
+            $this->load->view('header', $data);
             $this->load->view('incoming');
+        }
     }
     public function verifyOTP() {
         $OTP=$this->input->post('OTP');

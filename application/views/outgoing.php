@@ -23,7 +23,7 @@
 <!--</div>-->
 <div class="container">
     <div class="row clearfix"  style="background-color: #8197AB;opacity: 0.96;padding:2%;margin-top: 10%">
-        <div class="col-md-12 column">
+        <div class="col-md-12 column" id="inventoryUpdateStock">
             <div class="row clearfix inventoryInput">
                 <div class="col-md-3 column"></div>
                 <div class="col-md-6 column">
@@ -31,12 +31,7 @@
                         <span class="input-group-addon" id="fishNameAddon">Type of Fish : </span>
                         <!--                        <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">-->
                         <select id="fishName" class="form-control" aria-describedby="fishNameAddon">
-                            <option>SILVER POMFRET</option>
-                            <option>B</option>
-                            <option>C</option>
-                            <option>D</option>
-                            <option>E</option>
-                            <option>F</option>
+
                         </select>
                     </div>
                 </div>
@@ -72,6 +67,17 @@
                 <div class="col-md-3 column"></div>
                 <div class="col-md-6 column">
                     <div class="input-group">
+                        <span class="input-group-addon" id="availableAddon">Available Stock : </span>
+                        <input type="text" name="available" id="available" class="form-control" disabled="disabled">
+                        <span class="input-group-addon" id="availableAddon">KG</span>
+                    </div>
+                </div>
+                <div class="col-md-3 column"></div>
+            </div>
+            <div class="row clearfix inventoryInput">
+                <div class="col-md-3 column"></div>
+                <div class="col-md-6 column">
+                    <div class="input-group">
                         <span class="input-group-addon" id="rateAddon">Rate : </span>
                         <input type="text" name="rate" id="rate" class="form-control" placeholder="Rate per KG">
                         <span class="input-group-addon" id="rateAddon">/KG</span>
@@ -84,7 +90,18 @@
                 <div class="col-md-6 column">
                     <div class="input-group">
                         <span class="input-group-addon" id="totalAddon">Total Amount : </span>
-                        <input type="text" name="total" id="total" class="form-control">
+                        <input type="text" name="total" id="total" class="form-control" disabled="true" style="width: 65%">
+                        <select class="input-group-addon" id="currency" style="width: 35%;height:43px">
+                            <option>RS (&#x20B9;)</option>
+                            <option>USD (&#36;)</option>
+                            <option>JPY (&#165;)</option>
+                            <option>GBP (&#163;)</option>
+                            <option>AUD (&#36;)</option>
+                            <option>CHF (Fr)</option>
+                            <option>CAD (&#36;)</option>
+                            <option>MXN (&#36;)</option>
+
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-3 column"></div>
@@ -98,7 +115,7 @@
 <!--                    </div>-->
                     <div class="input-group">
                         <span class="input-group-addon" style="margin-right: 16%">Mode of Payment : </span>
-                        <input type="text" style="width:30.8%;visibility: hidden">
+                        <input type="text" style="width:0%;visibility: hidden">
                         Cash : <input type="radio" name="modeOfPayment" id="cashPayment" data-on-text="Yes" data-off-text="No" checked data-on-color="success">
                         Credit : <input type="radio" name="modeOfPayment" id="creditPayment" data-on-text="Yes" data-off-text="No" data-on-color="success">
                     </div>
@@ -152,7 +169,14 @@
             <div class="row clearfix inventoryInput">
                 <div class="col-md-3 column"></div>
                 <div class="col-md-6 column">
-                    <button id="addToStock" class="btn btn-primary" style="width:100%">Update Stock</button>
+                    <button id="updateStock" class="btn btn-primary" style="width:100%">Update Stock</button>
+                </div>
+                <div class="col-md-3 column"></div>
+            </div>
+            <div class="row clearfix inventoryInput">
+                <div class="col-md-3 column"></div>
+                <div class="col-md-6 column" id="outgoingAlert">
+
                 </div>
                 <div class="col-md-3 column"></div>
             </div>
@@ -188,5 +212,5 @@
 <script src="<?php echo base_url()?>js/bootstrap-switch.js"></script>
 <script src="<?php echo base_url()?>js/highlight.js"></script>
 <script src="<?php echo base_url()?>js/main.js"></script>
-<script src="<?php echo base_url()?>js/header.js"></script>
+<script src="<?php echo base_url()?>js/outgoing.js"></script>
 <!--<script src="--><?php //echo base_url()?><!--/js/header.js"></script>-->

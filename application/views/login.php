@@ -131,7 +131,7 @@
         <div class="row">
             <div class="col-lg-1"></div>
             <div class="col-lg-10" style="color: #ffffff;padding-left: 2%">
-                Copyright<span class="glyphicon glyphicon-copyright-mark"></span> 2014 <a target="_blank" href="<?php echo base_url()?>" title="Online shopping">Shopping</a>. All Rights Reserved.
+                Copyright<span class="glyphicon glyphicon-copyright-mark"></span> 2014 <a target="_blank" href="<?php echo base_url()?>" title="Online shopping">Marine Plaza</a>. All Rights Reserved.
 
                 <ul class="pull-right" style="list-style: none">
                     <li style="float: left;display: inline-block;margin-left: 15px"><a href="<?php echo base_url()?>">Home</a></li>

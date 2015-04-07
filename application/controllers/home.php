@@ -7,6 +7,10 @@ class Home extends CI_Controller {
     function __construct()
     { //loads all the required code igniter libraies as the controller is loaded
         parent::__construct();
+        $this->load->helper("form");
+        $this->load->model('incomingModel');
+        $this->load->model('outgoingModel');
+        $this->load->helper('cookie');
 //        $this->load->library('amazon_api');
 //        $this->load->model('visitor');
 //        $this->load->model('click');
@@ -57,6 +61,40 @@ class Home extends CI_Controller {
             $this->load->view('outgoing');
         }
 //        $this->load->view('footer');
+    }
+    public function getFishList() {
+        $result=$this->incomingModel->getFishList();
+        if($result) {
+            echo json_encode($result);
+        }
+    }
+    public function updateIncomingStock() {
+        $fishName=$this->input->post('fishName');
+        $weight=$this->input->post('weight');
+        $rate=$this->input->post('rate');
+        $done="failure";
+        $result=$this->incomingModel->updateIncomingStock($fishName,$weight,$rate);
+        $fishId=$result[0]->FishId;
+        $done=$this->incomingModel->createTransaction(1,$fishId,$weight,$rate,1);
+        echo $done;
+    }
+    public function updateOutgoingStock() {
+        $fishName=$this->input->post('fishName');
+        $weight=$this->input->post('weight');
+        $rate=$this->input->post('rate');
+        $isCash=$this->input->post('isCash');
+        $currency=$this->input->post('currency');
+//        $currency = preg_replace("/%u([0-9a-f]{3,4})/i","&#x\\1;",urldecode($currency));
+//        $currency = html_entity_decode($currency,null,'ISO-8859-15');
+        $done="failure";
+        $result=$this->outgoingModel->updateOutgoingStock($fishName,$weight,$rate);
+        $fishId=$result[0]->FishId;
+        if($isCash=='true')
+            $isCredit=0;
+        else
+            $isCredit=1;
+        $done=$this->outgoingModel->createTransaction(1,$fishId,$weight,$rate,1,$isCredit,$currency);
+        echo $done;
     }
     private function getUserId(){
         if(($this->session->userdata("session_id")&&$this->session->userdata("session_name"))){

@@ -61,7 +61,7 @@
 <!--</div>-->
 <div class="container">
     <div class="row clearfix"  style="background-color: #8197AB;opacity: 0.96;padding:2%;margin-top: 10%">
-        <div class="col-md-12 column">
+        <div class="col-md-12 column inventoryAddStock">
             <div class="row clearfix inventoryInput">
                 <div class="col-md-3 column"></div>
                 <div class="col-md-6 column">
@@ -69,12 +69,7 @@
                         <span class="input-group-addon" id="fishNameAddon">Type of Fish : </span>
 <!--                        <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">-->
                         <select id="fishName" class="form-control" aria-describedby="fishNameAddon">
-                            <option>SILVER POMFRET</option>
-                            <option>B</option>
-                            <option>C</option>
-                            <option>D</option>
-                            <option>E</option>
-                            <option>F</option>
+
                         </select>
                     </div>
                 </div>
@@ -121,8 +116,8 @@
                 <div class="col-md-3 column"></div>
                 <div class="col-md-6 column">
                     <div class="input-group">
-                        <span class="input-group-addon" id="totalAddon">Total Amount : </span>
-                            <input type="text" name="total" id="total" class="form-control">
+                        <span class="input-group-addon" id="totalAddon" >Total Amount : </span>
+                            <input type="text" name="total" id="total" class="form-control" disabled="true">
                     </div>
                 </div>
                 <div class="col-md-3 column"></div>
@@ -130,7 +125,14 @@
             <div class="row clearfix inventoryInput">
                 <div class="col-md-3 column"></div>
                 <div class="col-md-6 column">
-                    <button id="addToStock" class="btn btn-primary" style="width:100%">Update Stock</button>
+                    <button id="updateStock" class="btn btn-primary" style="width:100%">Update Stock</button>
+                </div>
+                <div class="col-md-3 column"></div>
+            </div>
+            <div class="row clearfix inventoryInput">
+                <div class="col-md-3 column"></div>
+                <div class="col-md-6 column" id="incomingAlert">
+
                 </div>
                 <div class="col-md-3 column"></div>
             </div>
@@ -162,5 +164,6 @@
     var base_url="<?php echo base_url()?>";
 </script>
 <script src="<?php echo base_url()?>js/jquery.min.js"></script>
+<script src="<?php echo base_url()?>js/incoming.js"></script>
 <script src="<?php echo base_url()?>Theme/js/bootstrap.js"></script>
 <!--<script src="--><?php //echo base_url()?><!--/js/header.js"></script>-->
