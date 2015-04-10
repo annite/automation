@@ -16,7 +16,7 @@ Class Login extends CI_Controller{
     }
     public function index()
     {
-        if(!($this->session->userdata("session_id")&&$this->session->userdata("session_name")))
+        if(!($this->session->userdata("session_id")&&$this->session->userdata("session_name")) || !isset($_COOKIE['user_email']) || !isset($_COOKIE['user_type']))
            $this->load->view('login');
         else {
             $data['active'] = "incoming";
@@ -29,11 +29,6 @@ Class Login extends CI_Controller{
         $email_id=$this->input->post('email_id');
         $result=$this->loginModel->getOTP($email_id,$OTP); //returns the record of the given username
         if($result[0]->OTP===$OTP) {
-            $sessiondata=array( //creates session data
-                "session_id" => 1,
-                "session_name" => $email_id,
-            );
-            $this->session->set_userdata($sessiondata);
             $this->loginModel->setOTP($email_id,NULL);
             echo "success";
         }else
@@ -41,13 +36,22 @@ Class Login extends CI_Controller{
     }
     public function verifyUser(){
 //        print_r($this->session->userdata("session_name"));
-        if(!($this->session->userdata("session_id")&&$this->session->userdata("session_name")))
+        if(!($this->session->userdata("session_id")&&$this->session->userdata("session_name"))|| !isset($_COOKIE['user_email']) || !isset($_COOKIE['user_type']))
         {
 
             $user_id=$this->input->post('email_id');
             $result=$this->loginModel->getPassword($user_id); //returns the record of the given username
             if($result){
                 if($result[0]->password===md5($this->input->post('password'))){
+                    $user_type=$result[0]->user_type;
+                    $sessiondata=array( //creates session data
+                        "session_id" => 1,
+                        "session_name" => $user_id,
+                        "user_type" => $user_type,
+                    );
+                    $this->session->set_userdata($sessiondata);
+                    set_cookie('user_email',$user_id);
+                    set_cookie('user_type',$user_type);
                     $OTP=rand(0000,9999);
                     $done=$this->loginModel->setOTP($user_id,$OTP);
                     if($done) {
@@ -216,6 +220,4 @@ Class Login extends CI_Controller{
             echo "failure";
        // redirect("home");
     }
-
-
 }

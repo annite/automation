@@ -10,6 +10,7 @@ class Home extends CI_Controller {
         $this->load->helper("form");
         $this->load->model('incomingModel');
         $this->load->model('outgoingModel');
+        $this->load->model('myWorkModel');
         $this->load->helper('cookie');
 //        $this->load->library('amazon_api');
 //        $this->load->model('visitor');
@@ -26,49 +27,85 @@ class Home extends CI_Controller {
 
     public function index()
     {
-//        $data = array(
-//            'navbar' => $this->load->view('navbar', $this->info, TRUE),
-//            'home_suggestion' => $this->load->view('home_suggestion', array(), TRUE),
-//            'home_top_Selling' => $this->load->view('home_top_selling', array(), TRUE),
-//            'home_new_arrival' => $this->load->view('home_new_arrival', array(), TRUE),
-//            'footerContent' => $this->load->view('footer', array('page'=>"home"), TRUE),
-//        );
-//
-//        $this->load->view('templates/home', $data);
+        if($this->session->userdata('user_type') == 'Employee')
+            $this->incoming();
+        else if($this->session->userdata('user_type') == 'Admin')
+            $this->reports();
+        else
+            redirect('login');
 
-        $this->incoming();
     }
     public function incoming(){
+        $this->isLoggedIn('Employee');
         if (!($this->session->userdata("session_id") && $this->session->userdata("session_name"))) {
 //            $this->load->view('login');
             redirect('login');
         }
         else {
             $data['active'] = "incoming";
+            $data['user_type'] = "Employee";
             $this->load->view('header', $data);
             $this->load->view('incoming');
             //        $this->load->view('footer');
         }
     }
-    public function outgoing(){
+    public function outgoing() {
+        $this->isLoggedIn('Employee');
         if (!($this->session->userdata("session_id") && $this->session->userdata("session_name"))) {
 //            $this->load->view('login');
             redirect('login');
         }
         else {
             $data['active'] = "outgoing";
+            $data['user_type'] = "Employee";
             $this->load->view('header', $data);
             $this->load->view('outgoing');
         }
 //        $this->load->view('footer');
     }
+    public function myWork() {
+        $this->isLoggedIn('Employee');
+        if (!($this->session->userdata("session_id") && $this->session->userdata("session_name"))) {
+//            $this->load->view('login');
+            redirect('login');
+        }
+        else {
+            $data['active'] = "myWork";
+            $data['user_type'] = "Employee";
+            $this->load->view('header', $data);
+            $this->load->view('my_work');
+            //        $this->load->view('footer');
+        }
+    }
+    public function getMyWork() {
+        $this->isLoggedIn('Employee');
+        $user_email=$_POST['user_email'];
+        $result=$this->myWorkModel->getMyWork($user_email);
+        if($result!="error")
+            echo json_encode($result);
+        else
+            echo "error";
+
+    }
+    public function taskStatusChange() {
+        $this->isLoggedIn('Employee');
+        $work_id=$_POST['work_id'];
+        $status=$_POST['status'];
+        $result=$this->myWorkModel->taskStatusChange($work_id,$status);
+        if($result=="done")
+            echo "done";
+        else
+            echo "failure";
+    }
     public function getFishList() {
+        $this->isLoggedIn('Employee');
         $result=$this->incomingModel->getFishList();
         if($result) {
             echo json_encode($result);
         }
     }
     public function updateIncomingStock() {
+        $this->isLoggedIn('Employee');
         $fishName=$this->input->post('fishName');
         $weight=$this->input->post('weight');
         $rate=$this->input->post('rate');
@@ -79,6 +116,7 @@ class Home extends CI_Controller {
         echo $done;
     }
     public function updateOutgoingStock() {
+        $this->isLoggedIn('Employee');
         $fishName=$this->input->post('fishName');
         $weight=$this->input->post('weight');
         $rate=$this->input->post('rate');
@@ -96,6 +134,57 @@ class Home extends CI_Controller {
         $done=$this->outgoingModel->createTransaction(1,$fishId,$weight,$rate,1,$isCredit,$currency);
         echo $done;
     }
+
+
+    public function reports() {
+        $this->isLoggedIn('Admin');
+        if (!($this->session->userdata("session_id") && $this->session->userdata("session_name"))) {
+//            $this->load->view('login');
+            redirect('login');
+        }
+        else {
+            $data['active'] = "reports";
+            $data['user_type'] = "Admin";
+            $this->load->view('header', $data);
+            $this->load->view('reports');
+        }
+    }
+
+
+    public function isLoggedIn($user_type) {
+        if($_COOKIE['user_email'] && $_COOKIE['user_type']==$user_type)
+            return true;
+        else if($_COOKIE['user_email'] && $_COOKIE['user_type']!=$user_type)
+            redirect('notFound');
+        else
+            redirect('login');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private function getUserId(){
         if(($this->session->userdata("session_id")&&$this->session->userdata("session_name"))){
             return $this->session->userdata("session_name");
@@ -248,6 +337,7 @@ class Home extends CI_Controller {
 
         $this->load->view('templates/order_details', $data);
     }
+
 
 
 

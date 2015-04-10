@@ -46,8 +46,14 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li id="incomingTab" class="<? if($active=='incoming') echo 'active'?>"><a href="<?php echo base_url()?>/index.php/home/incoming">Incoming</a></li>
-                <li id="outgoingTab" class="<? if($active=='outgoing') echo 'active'?>"><a href="<?php echo base_url()?>/index.php/home/outgoing">Outgoing</a></li>
+                <?php if($user_type=='Employee') {?>
+                    <li id="incomingTab" class="<? if($active=='incoming') echo 'active'?>"><a href="<?php echo base_url()?>/index.php/home/incoming">Incoming</a></li>
+                    <li id="outgoingTab" class="<? if($active=='outgoing') echo 'active'?>"><a href="<?php echo base_url()?>/index.php/home/outgoing">Outgoing</a></li>
+                    <li id="myworkTab" class="<? if($active=='myWork') echo 'active'?>"><a href="<?php echo base_url()?>/index.php/home/myWork">My Work</a></li>
+                <?php } else {?>
+                    <li id="reportsTab" class="<? if($active=='reports') echo 'active'?>"><a href="<?php echo base_url()?>/index.php/home/reports">Reports</a></li>
+                    <li id="creditTab" class="<? if($active=='credit') echo 'active'?>"><a href="<?php echo base_url()?>/index.php/home/reports">Reports</a></li>
+                <?php } ?>
             </ul>
             <ul class="nav navbar-nav navbar-right">
 <!--                <li><a href="--><?php //echo base_url()?><!--index.php/cartOpn/showCart">Cart <span id="cartVal" class="badge">--><?php //echo $cartVal?><!--</span></a></li>-->
