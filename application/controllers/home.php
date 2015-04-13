@@ -8,6 +8,7 @@ class Home extends CI_Controller {
     { //loads all the required code igniter libraies as the controller is loaded
         parent::__construct();
         $this->load->helper("form");
+        $this->load->model('loginmodel');
         $this->load->model('incomingModel');
         $this->load->model('outgoingModel');
         $this->load->model('myWorkModel');
@@ -138,18 +139,40 @@ class Home extends CI_Controller {
 
     public function reports() {
         $this->isLoggedIn('Admin');
-        if (!($this->session->userdata("session_id") && $this->session->userdata("session_name"))) {
-//            $this->load->view('login');
-            redirect('login');
-        }
-        else {
+//        if (!($this->session->userdata("session_id") && $this->session->userdata("session_name"))) {
+////            $this->load->view('login');
+//            redirect('login');
+//        }
+//        else {
             $data['active'] = "reports";
             $data['user_type'] = "Admin";
             $this->load->view('header', $data);
             $this->load->view('reports');
-        }
+//        }
     }
 
+    public function createTask() {
+        $this->isLoggedIn('Admin');
+//        if (!($this->session->userdata("session_id") && $this->session->userdata("session_name"))) {
+////            $this->load->view('login');
+//            redirect('login');
+//        }
+//        else {
+            $data['active'] = "create_task";
+            $data['user_type'] = "Admin";
+            $this->load->view('header', $data);
+            $this->load->view('create_task');
+//        }
+    }
+
+    public function getEmployeesList() {
+        $this->isLoggedIn('Admin');
+        $list=$this->loginmodel->getEmployeesList();
+        if($list)
+            echo json_encode($list);
+        else
+            echo "failure";
+    }
 
     public function isLoggedIn($user_type) {
         if($_COOKIE['user_email'] && $_COOKIE['user_type']==$user_type)

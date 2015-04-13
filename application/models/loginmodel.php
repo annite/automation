@@ -81,4 +81,11 @@ class LoginModel extends CI_Model{
         else
             return false;
     }
+    public function getEmployeesList() {
+        $query=$this->db->query("select user_email from login where user_type='Employee'");
+        if($query->result())
+            return $query->result();
+        else
+            return false;
+    }
 }
