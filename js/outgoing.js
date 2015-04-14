@@ -35,12 +35,16 @@ $("#updateStock").click(function(b){
         document.querySelector("#weight").placeholder = "Exceeding available stock";
         document.querySelector("#weight").focus();
         b.preventDefault();
+    }else if (document.querySelector("#cashPaid").value === "") {
+        document.querySelector("#cashPaid").style.borderColor = "#B81B1B";
+        document.querySelector("#cashPaid").placeholder = "Please enter cash paid amount";
+        document.querySelector("#cashPaid").focus();
+        b.preventDefault();
     } else {
-        $("#total").val(parseInt(document.querySelector("#weight").value)*parseInt(document.querySelector("#rate").value));
         jQuery.ajax({
             type:"POST",
             url:base_url+"index.php/home/updateOutgoingStock",
-            data:{fishName:$("#fishName").val(),weight:$("#weight").val(),rate:$("#rate").val(),isCash:document.getElementById("cashPayment").checked,currency:$("#currency").val().substring(0,$("#currency").val().length-4)},
+            data:{fishName:$("#fishName").val(),weight:$("#weight").val(),rate:$("#rate").val(),mode:getPaymentMode(),currency:$("#currency").val().substring(0,$("#currency").val().length-4),cash:$("#cashPaid").val()},
             success:function($data){
                 //console.log($data);
                 if($data=="done") {
@@ -69,4 +73,37 @@ $("#inventoryUpdateStock").click(function(b){
 });
 $("#fishName").change(function(){
     $("#available").val(FishStockDetails[document.getElementById("fishName").selectedIndex].Weight);
+});
+function getPaymentMode() {
+    var mode=0;
+    if(document.getElementById("cashPayment").checked)
+        mode=0;
+    else if(document.getElementById("creditPayment").checked)
+        mode=1;
+    else
+        mode=2;
+    return mode;
+}
+$('input[name="modeOfPayment"]').on('switchChange.bootstrapSwitch', function(event, state) {
+    //console.log(this); // DOM element
+    //console.log(event); // jQuery event
+    //console.log(state); // true | false
+    if(event.target.id=="cashCreditPayment")
+        $("#cashPaidRow").attr('style','display:block');
+    else {
+        $("#cashPaid").val("0");
+        $("#cashPaidRow").attr('style', 'display:none');
+    }
+});
+$("#weight").blur(function(){
+    if($("#rate").val()!="" && $("#weight").val()!="")
+        $("#total").val(parseFloat(document.querySelector("#weight").value)*parseFloat(document.querySelector("#rate").value));
+    else
+        $("#total").val("");
+});
+$("#rate").blur(function(){
+    if($("#weight").val()!="" && $("#rate").val()!="")
+        $("#total").val(parseFloat(document.querySelector("#weight").value)*parseFloat(document.querySelector("#rate").value));
+    else
+        $("#total").val("");
 });

@@ -6,15 +6,14 @@ var data;
 $(document).ready(function(e){
     jQuery.ajax({
         type:"POST",
-        url:base_url+"index.php/home/getMyWork",
-        data:{user_email:unescape(getCookie('user_email'))},
+        url:base_url+"index.php/home/getAllWork",
         success:function($data){
             $data=jQuery.parseJSON($data);
             if($data!="error" && $data.length>0)
             {
                 data=$data;
                 console.log(data);
-                $(".work").append('<div class="row clearfix workTitle"><div class="col-md-12 column"><center><h3>Your Task History</h3></center></div></div>');
+                $(".work").append('<div class="row clearfix workTitle"><div class="col-md-12 column"><center><h3>Assigned Task History</h3></center></div></div>');
                 $(".work").append('<div class="panel-group" id="workDetails">');
                 for(var i=0;i<data.length;i++)
                 {
@@ -29,15 +28,11 @@ $(document).ready(function(e){
                     radio.setAttribute('type','checkbox');
                     radio.setAttribute('name','work'+work_id);
                     radio.setAttribute('id',work_id);
-                    radio.setAttribute('data-on-text',"Completed");
-                    radio.setAttribute('data-off-text',"Pending");
+                    radio.setAttribute('data-on-text',"CloseTask");
+                    radio.setAttribute('data-off-text',status);
                     radio.setAttribute('data-on-color','success');
                     radio.setAttribute('data-off-color','danger');
-                    if(status==="Work Completed") {
-                        radio.setAttribute('checked','checked');
-                        radio.setAttribute('disabled','disabled');
-                    } else
-                        radio.setAttribute('onChange','taskStatusChange(this)');
+                    radio.setAttribute('onChange','taskStatusChange(this)');
                     $("."+work_id).append(radio);
                     $("[name='work"+work_id+"']").bootstrapSwitch();
 
@@ -54,12 +49,12 @@ function taskStatusChange(e) {
     var status;
     var id=e.id;
     if(document.getElementById(id).checked)
-        status=1;
+        status=2;
     else
         status=0;
     jQuery.ajax({
         type:"POST",
-        url:base_url+"index.php/home/taskStatusChange",
+        url:base_url+"index.php/home/taskStatusChangeByAdmin",
         data:{work_id: e.id,status:status},
         success:function($data){
             $("#status"+id).html(getStatus(status));

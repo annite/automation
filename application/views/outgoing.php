@@ -21,6 +21,11 @@
 <!--        </div><!--/.nav-collapse -->-->
 <!--    </div>-->
 <!--</div>-->
+<!--<style type="text/css">-->
+<!--    .bootstrap-switch-id-cashPayment,.bootstrap-switch-id-creditPayment {-->
+<!--        margin-right: 7%;-->
+<!--    }-->
+<!--</style>-->
 <div class="container">
     <div class="row clearfix"  style="background-color: #8197AB;opacity: 0.96;padding:2%;margin-top: 10%">
         <div class="col-md-12 column" id="inventoryUpdateStock">
@@ -37,17 +42,23 @@
                 </div>
                 <div class="col-md-3 column"></div>
             </div>
+<!--            <div class="row clearfix inventoryInput">-->
+<!--                <div class="col-md-3 column"></div>-->
+<!--                <div class="col-md-6 column">-->
+<!--                    <div class="input-group">-->
+<!--                        <span class="input-group-addon" id="quantityAddon">No of piece : </span>-->
+<!--                        <input type="text" name="quantity" id="quantity" class="form-control"  placeholder="No of piece" aria-describedby="quantityAddon">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-3 column"></div>-->
+<!--            </div>-->
             <div class="row clearfix inventoryInput">
                 <div class="col-md-3 column"></div>
                 <div class="col-md-6 column">
                     <div class="input-group">
-                        <span class="input-group-addon" id="quantityAddon">Quantity : </span>
-                        <input type="text" name="quantity" id="quantity" class="form-control"  placeholder="Quantity" aria-describedby="quantityAddon">
-                        <!--                    Quantity : <select id="unit" class="form-control">-->
-                        <!--                        <option>KG</option>-->
-                        <!--                        <option>GM</option>-->
-                        <!--                        <option>PCs</option>-->
-                        <!--                    </select>-->
+                        <span class="input-group-addon" id="availableAddon">Available Stock : </span>
+                        <input type="text" name="available" id="available" class="form-control" disabled="disabled">
+                        <span class="input-group-addon" id="availableAddon">KG</span>
                     </div>
                 </div>
                 <div class="col-md-3 column"></div>
@@ -59,17 +70,6 @@
                         <span class="input-group-addon" id="weightAddon">Weight : </span>
                         <input type="text" name="weight" id="weight" class="form-control" placeholder="Weight in KG Only">
                         <span class="input-group-addon" id="weightAddon">KG</span>
-                    </div>
-                </div>
-                <div class="col-md-3 column"></div>
-            </div>
-            <div class="row clearfix inventoryInput">
-                <div class="col-md-3 column"></div>
-                <div class="col-md-6 column">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="availableAddon">Available Stock : </span>
-                        <input type="text" name="available" id="available" class="form-control" disabled="disabled">
-                        <span class="input-group-addon" id="availableAddon">KG</span>
                     </div>
                 </div>
                 <div class="col-md-3 column"></div>
@@ -109,16 +109,34 @@
             <div class="row clearfix inventoryInput">
                 <div class="col-md-3 column"></div>
                 <div class="col-md-6 column">
+                    <!--                    <div class="input-group">-->
+                    <!--                        <span class="input-group-addon" id="totalAddon">Total Amount : </span>-->
+                    <!--                        <input type="text" name="total" id="total" class="form-control">-->
+                    <!--                    </div>-->
+                    <div class="input-group">
+                        <span class="input-group-addon" style="margin-right: 16%">Mode of Payment : </span>
+                    </div>
+                    <!--                    <input type="radio" name="radio1" checked class="switch-radio1">-->
+                    <!--                    <input type="radio" name="radio1" class="switch-radio1">-->
+
+                    <!--                    <div class="input-group">-->
+                    <!--                        <span class="input-group-addon" id="totalAddon">Cash : </span>-->
+                    <!--                        <input type="radio" value="Cash" id="cashPayment" name="modeOfPayment">-->
+                    <!--                    </div>-->
+                    <!--                    Credit : <input type="radio" value="Credit" id="creditPayment" name="modeOfPayment">-->
+                </div>
+                <div class="col-md-3 column"></div>
+            </div>
+            <div class="row clearfix inventoryInput">
+                <div class="col-md-3 column"></div>
+                <div class="col-md-6 column">
 <!--                    <div class="input-group">-->
 <!--                        <span class="input-group-addon" id="totalAddon">Total Amount : </span>-->
 <!--                        <input type="text" name="total" id="total" class="form-control">-->
 <!--                    </div>-->
-                    <div class="input-group">
-                        <span class="input-group-addon" style="margin-right: 16%">Mode of Payment : </span>
-                        <input type="text" style="width:0%;visibility: hidden">
-                        Cash : <input type="radio" name="modeOfPayment" id="cashPayment" data-on-text="Yes" data-off-text="No" checked data-on-color="success">
-                        Credit : <input type="radio" name="modeOfPayment" id="creditPayment" data-on-text="Yes" data-off-text="No" data-on-color="success">
-                    </div>
+                        <div class="col-md-4 column">Cash : <input type="radio" name="modeOfPayment" id="cashPayment" data-on-text="Yes" data-off-text="No" checked data-on-color="success"></div>
+                        <div class="col-md-4 column">Credit : <input type="radio" name="modeOfPayment" id="creditPayment" data-on-text="Yes" data-off-text="No" data-on-color="success"></div>
+                        <div class="col-md-4 column">Ca+Cre : <input type="radio" name="modeOfPayment" id="cashCreditPayment" data-on-text="Yes" data-off-text="No" data-on-color="success"></div>
 <!--                    <input type="radio" name="radio1" checked class="switch-radio1">-->
 <!--                    <input type="radio" name="radio1" class="switch-radio1">-->
 
@@ -127,6 +145,16 @@
 <!--                        <input type="radio" value="Cash" id="cashPayment" name="modeOfPayment">-->
 <!--                    </div>-->
 <!--                    Credit : <input type="radio" value="Credit" id="creditPayment" name="modeOfPayment">-->
+                </div>
+                <div class="col-md-3 column"></div>
+            </div>
+            <div class="row clearfix inventoryInput" id="cashPaidRow" style="display: none">
+                <div class="col-md-3 column"></div>
+                <div class="col-md-6 column">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="rateAddon">Cash Paid : </span>
+                        <input type="text" name="cashPaid" id="cashPaid" class="form-control" placeholder="Cash Paid" value="0">
+                    </div>
                 </div>
                 <div class="col-md-3 column"></div>
             </div>

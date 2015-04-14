@@ -105,6 +105,13 @@ class Home extends CI_Controller {
             echo json_encode($result);
         }
     }
+    public function getSizes() {
+        $this->isLoggedIn('Employee');
+        $result=$this->incomingModel->getSizes();
+        if($result) {
+            echo json_encode($result);
+        }
+    }
     public function updateIncomingStock() {
         $this->isLoggedIn('Employee');
         $fishName=$this->input->post('fishName');
@@ -121,20 +128,33 @@ class Home extends CI_Controller {
         $fishName=$this->input->post('fishName');
         $weight=$this->input->post('weight');
         $rate=$this->input->post('rate');
-        $isCash=$this->input->post('isCash');
+//        $isCash=$this->input->post('isCash');
+        $mode=$this->input->post('mode');
         $currency=$this->input->post('currency');
 //        $currency = preg_replace("/%u([0-9a-f]{3,4})/i","&#x\\1;",urldecode($currency));
 //        $currency = html_entity_decode($currency,null,'ISO-8859-15');
         $done="failure";
         $result=$this->outgoingModel->updateOutgoingStock($fishName,$weight,$rate);
         $fishId=$result[0]->FishId;
-        if($isCash=='true')
-            $isCredit=0;
-        else
-            $isCredit=1;
-        $done=$this->outgoingModel->createTransaction(1,$fishId,$weight,$rate,1,$isCredit,$currency);
+//        if($isCash=='true')
+//            $isCredit=0;
+//        else
+//            $isCredit=1;
+        $cash=0;
+        if($mode==2)
+            $cash=$_POST['cash'];
+        $done=$this->outgoingModel->createTransaction(1,$fishId,$weight,$rate,1,$mode,$currency,$cash);
         echo $done;
     }
+
+
+
+
+
+
+
+
+
 
 
     public function reports() {
@@ -165,11 +185,116 @@ class Home extends CI_Controller {
 //        }
     }
 
+    public function notifications() {
+        $this->isLoggedIn('Admin');
+//        if (!($this->session->userdata("session_id") && $this->session->userdata("session_name"))) {
+////            $this->load->view('login');
+//            redirect('login');
+//        }
+//        else {
+        $data['active'] = "notifications";
+        $data['user_type'] = "Admin";
+        $this->load->view('header', $data);
+        $this->load->view('notifications');
+//        }
+    }
+
     public function getEmployeesList() {
         $this->isLoggedIn('Admin');
         $list=$this->loginmodel->getEmployeesList();
         if($list)
             echo json_encode($list);
+        else
+            echo "failure";
+    }
+
+    public function assignTask() {
+        $this->isLoggedIn('Admin');
+        $priority=$_POST['priority'];
+        $assignedTo=$_POST['assignedTo'];
+        $message=$_POST['message'];
+        $done=$this->myWorkModel->assignTask($priority,$assignedTo,$message);
+        if($done)
+            echo "done";
+        else
+            echo "failure";
+    }
+
+    public function getAllWork() {
+        $result=$this->myWorkModel->getAllWork();
+        if($result!="error")
+            echo json_encode($result);
+        else
+            echo "error";
+    }
+
+    public function taskStatusChangeByAdmin() {
+        $this->isLoggedIn('Admin');
+        $work_id=$_POST['work_id'];
+        $status=$_POST['status'];
+        $result=$this->myWorkModel->taskStatusChange($work_id,$status);
+        if($result=="done")
+            echo "done";
+        else
+            echo "failure";
+    }
+
+
+    public function getPurchaseReport() {
+        $this->isLoggedIn('Admin');
+        $startdate=$_POST['startdate'];
+        $enddate=$_POST['enddate'];
+        $report=$this->incomingModel->getPurchaseReport($startdate,$enddate);
+        if($report)
+            echo json_encode($report);
+        else
+            echo "failure";
+    }
+    public function getSalesReport() {
+        $this->isLoggedIn('Admin');
+        $startdate=$_POST['startdate'];
+        $enddate=$_POST['enddate'];
+        $report=$this->outgoingModel->getSalesReport($startdate,$enddate);
+        if($report)
+            echo json_encode($report);
+        else
+            echo "failure";
+    }
+    public function getStockReport() {
+        $this->isLoggedIn('Admin');
+        $report=$this->outgoingModel->getStockReport();
+        if($report)
+            echo json_encode($report);
+        else
+            echo "failure";
+    }
+    public function getProfitReport() {
+        $this->isLoggedIn('Admin');
+        $startdate=$_POST['startdate'];
+        $enddate=$_POST['enddate'];
+        $report=$this->outgoingModel->getProfitReport($startdate,$enddate);
+        if($report)
+            echo json_encode($report);
+        else
+            echo "failure";
+    }
+    public function getCreditReport() {
+        $this->isLoggedIn('Admin');
+//        $startdate=$_POST['startdate'];
+//        $enddate=$_POST['enddate'];
+        $report=$this->outgoingModel->getCreditReport();
+        if($report)
+            echo json_encode($report);
+        else
+            echo "failure";
+    }
+    public function getCashReport() {
+        $this->isLoggedIn('Admin');
+//        $startdate=$_POST['startdate'];
+//        $enddate=$_POST['enddate'];
+        $report=$this->outgoingModel->getCashReport();
+        if($report)
+            echo json_encode($report);
         else
             echo "failure";
     }

@@ -67,20 +67,21 @@
                 <div class="col-md-6 column">
                     <div class="input-group">
                         <span class="input-group-addon" id="fishNameAddon">Type of Fish : </span>
-<!--                        <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">-->
                         <select id="fishName" class="form-control" aria-describedby="fishNameAddon">
 
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3 column"></div>
+                <div class="col-md-3 column">
+                    <button id="addNewFish" class="btn btn-primary">Add New Fish</button>
+                </div>
             </div>
             <div class="row clearfix inventoryInput">
                 <div class="col-md-3 column"></div>
                 <div class="col-md-6 column">
                     <div class="input-group">
-                        <span class="input-group-addon" id="quantityAddon">Quantity : </span>
-                            <input type="text" name="quantity" id="quantity" class="form-control"  placeholder="Quantity" aria-describedby="quantityAddon">
+                        <span class="input-group-addon" id="quantityAddon">No of piece : </span>
+                            <input type="text" name="quantity" id="quantity" class="form-control"  placeholder="No of piece" aria-describedby="quantityAddon">
                     <!--                    Quantity : <select id="unit" class="form-control">-->
                     <!--                        <option>KG</option>-->
                     <!--                        <option>GM</option>-->
@@ -89,6 +90,19 @@
                     </div>
                 </div>
                 <div class="col-md-3 column"></div>
+            </div>
+            <div class="row clearfix inventoryInput">
+                <div class="col-md-3 column"></div>
+                <div class="col-md-6 column">
+                    <div class="input-group">
+                        <span class="input-group-addon">Size of Fish : </span>
+                        <select id="fishSizes" class="form-control">
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3 column">
+                </div>
             </div>
             <div class="row clearfix inventoryInput">
                 <div class="col-md-3 column"></div>

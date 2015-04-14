@@ -48,8 +48,8 @@
             </div>
             <div class="row clearfix inventoryInput">
                 <div class="col-md-3 column"></div>
-                <div class="col-md-6 column">
-                    <button style="width:100%" class="btn btn-primary">Assign Task</button>
+                <div class="col-md-6 column workAlert">
+                    <button style="width:100%" class="btn btn-primary" id="assignTask">Assign Task</button>
                 </div>
                 <div class="col-md-3 column"></div>
             </div>

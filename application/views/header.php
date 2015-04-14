@@ -18,7 +18,10 @@
 
     <title> </title>
     <link href="<?php echo base_url()?>Theme/css/bootstrap.css" rel="stylesheet" >
+    <link href="<?php echo base_url()?>css/jquery-ui.css" rel="stylesheet" >
     <link rel="stylesheet" href="<?php echo base_url()?>css/custom_style.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url()?>css/jquery.dataTables.min.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url()?>css/daterangepicker-bs3.css" type="text/css">
     <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap-switch.css" type="text/css">
     <link rel="stylesheet" href="<?php echo base_url()?>css/sticky-footer.css" type="text/css">
     <link rel="stylesheet" href="<?php echo base_url()?>Theme/css/freelancer.css" type="text/css">
@@ -47,13 +50,14 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <?php if($user_type=='Employee') {?>
-                    <li id="incomingTab" class="<? if($active=='incoming') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/incoming">Incoming</a></li>
-                    <li id="outgoingTab" class="<? if($active=='outgoing') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/outgoing">Outgoing</a></li>
-                    <li id="myworkTab" class="<? if($active=='myWork') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/myWork">My Work</a></li>
+                    <li id="incomingTab" class="<?php if($active=='incoming') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/incoming">Incoming</a></li>
+                    <li id="outgoingTab" class="<?php if($active=='outgoing') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/outgoing">Outgoing</a></li>
+                    <li id="myworkTab" class="<?php if($active=='myWork') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/myWork">My Work</a></li>
                 <?php } else {?>
-                    <li id="reportsTab" class="<? if($active=='reports') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/reports">Reports</a></li>
-                    <li id="creditTab" class="<? if($active=='credit') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/credit">Credit</a></li>
-                    <li id="createTaskTab" class="<? if($active=='create_task') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/createTask">Create Task</a></li>
+                    <li id="reportsTab" class="<?php if($active=='reports') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/reports">Reports</a></li>
+                    <li id="creditTab" class="<?php if($active=='credit') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/credit">Credit</a></li>
+                    <li id="createTaskTab" class="<?php if($active=='create_task') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/createTask">Create Task</a></li>
+                    <li id="notificationTab" class="<?php if($active=='notifications') echo 'active'?>"><a href="<?php echo base_url()?>index.php/home/notifications">Notifications</a></li>
                 <?php } ?>
             </ul>
             <ul class="nav navbar-nav navbar-right">
