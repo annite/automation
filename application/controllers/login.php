@@ -39,21 +39,23 @@ Class Login extends CI_Controller{
         if(!($this->session->userdata("session_id")&&$this->session->userdata("session_name"))|| !isset($_COOKIE['user_email']) || !isset($_COOKIE['user_type']))
         {
 
-            $user_id=$this->input->post('email_id');
-            $result=$this->loginModel->getPassword($user_id); //returns the record of the given username
+            $email_id=$this->input->post('email_id');
+            $result=$this->loginModel->getPassword($email_id); //returns the record of the given username
             if($result){
                 if($result[0]->password===md5($this->input->post('password'))){
                     $user_type=$result[0]->user_type;
+                    $user_id=$result[0]->user_id;
                     $sessiondata=array( //creates session data
-                        "session_id" => 1,
-                        "session_name" => $user_id,
+                        "session_id" => $user_id,
+                        "session_name" => $email_id,
                         "user_type" => $user_type,
                     );
                     $this->session->set_userdata($sessiondata);
-                    set_cookie('user_email',$user_id);
+                    set_cookie('user_id',$user_id);
+                    set_cookie('user_email',$email_id);
                     set_cookie('user_type',$user_type);
                     $OTP=rand(0000,9999);
-                    $done=$this->loginModel->setOTP($user_id,$OTP);
+                    $done=$this->loginModel->setOTP($email_id,$OTP);
                     if($done) {
                         $query= "You One Time Password (OTP) is : ".$OTP;
                         $this->load->library('email');
@@ -71,7 +73,7 @@ Class Login extends CI_Controller{
                         $this->email->initialize($config);
 
                         $this->email->from('hexagraph69@gmail.com.com', 'automation OTP');
-                        $this->email->to($user_id);
+                        $this->email->to($email_id);
                         // $this->email->cc('another@another-example.com');
                         // $this->email->bcc('them@their-example.com');
 
@@ -84,7 +86,7 @@ Class Login extends CI_Controller{
                         echo "failure";
 //                    $sessiondata=array( //creates session data
 //                        "session_id" => 1,
-//                        "session_name" => $user_id,
+//                        "session_name" => $email_id,
 //                    );
 //
 //                    $this->session->set_userdata($sessiondata);
@@ -104,31 +106,31 @@ Class Login extends CI_Controller{
     }
 
     public function registerUser(){
-            $user_id=$this->input->post('email_id');
+            $email_id=$this->input->post('email_id');
             $password=$this->input->post('password');
             $name=$this->input->post('fullname');
-            if($name!="" && filter_var($user_id, FILTER_VALIDATE_EMAIL) && $password!= "")
-                $result=$this->validateUser($user_id);
+            if($name!="" && filter_var($email_id, FILTER_VALIDATE_EMAIL) && $password!= "")
+                $result=$this->validateUser($email_id);
             else
                 echo "failure";
             if(!$result)
             {
-                $done=$this->user->registerUser($user_id,$password,$name);
+                $done=$this->user->registerUser($email_id,$password,$name);
                 if($done)
                 {
                     $sessiondata=array( //creates session data
                         "session_id" => 1,
-                        "session_name" => $user_id
+                        "session_name" => $email_id
                     );
 
                     $this->session->set_userdata($sessiondata);
                     $this->load->model("cart");
                     $this->load->model("search");
                     $this->load->model("click");
-                    $this->cart->replaceVisitorByUserId($user_id,$this->input->cookie("visitor_id"));
-                    $this->session->set_userdata("cart",$this->cart->getCartCount($user_id));
-                    $this->search->replaceVisitorByUserId($user_id,$this->input->cookie("visitor_id"));
-                    $this->click->replaceVisitorByUserId($user_id,$this->input->cookie("visitor_id"));
+                    $this->cart->replaceVisitorByUserId($email_id,$this->input->cookie("visitor_id"));
+                    $this->session->set_userdata("cart",$this->cart->getCartCount($email_id));
+                    $this->search->replaceVisitorByUserId($email_id,$this->input->cookie("visitor_id"));
+                    $this->click->replaceVisitorByUserId($email_id,$this->input->cookie("visitor_id"));
                     echo "success";
                 }
                 else
@@ -137,9 +139,9 @@ Class Login extends CI_Controller{
             else
                 echo "failure";
     }
-    public function validateUser($user_id)
+    public function validateUser($email_id)
     {
-        if($this->loginModel->checkEmail($user_id))
+        if($this->loginModel->checkEmail($email_id))
             return true;
         else
             return false;

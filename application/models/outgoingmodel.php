@@ -38,9 +38,9 @@ class OutgoingModel extends CI_Model{
         }
         $total=($weight*$rate);
         $total=$this->db->escape($total);
-        $this->db->query("insert into fishoutwardtransaction (EmployeeId,FishId,CustomerID,Weight,Rate,TotalCost,Currency,TransactionTypeId,AmountPaid,BalanceAmount,IsBalanceRemaining) values ({$employeeId},{$fishId},1,{$weight},{$rate},{$total},{$currency},{$mode},{$amountPaid},{$amountBalance},{$isCredit})");
+        $this->db->query("insert into fishoutwardtransaction (EmployeeId,FishId,CustomerID,Weight,Rate,TotalCost,Currency,TransactionTypeId,AmountPaid,BalanceAmount,IsBalanceRemaining) values ({$employeeId},{$fishId},1,{$weight},{$rate},{$total},'".$currency."',{$mode},{$amountPaid},{$amountBalance},{$isCredit})");
         if(!$this->db->_error_message()) {
-           echo "done";
+           return $this->db->insert_id();
         }
     }
     public function getSalesReport($startdate,$enddate) {

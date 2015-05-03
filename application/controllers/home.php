@@ -13,6 +13,8 @@ class Home extends CI_Controller {
         $this->load->model('outgoingModel');
         $this->load->model('myWorkModel');
         $this->load->helper('cookie');
+
+        $this->load->library('email');
 //        $this->load->library('amazon_api');
 //        $this->load->model('visitor');
 //        $this->load->model('click');
@@ -143,8 +145,121 @@ class Home extends CI_Controller {
         $cash=0;
         if($mode==2)
             $cash=$_POST['cash'];
-        $done=$this->outgoingModel->createTransaction(1,$fishId,$weight,$rate,1,$mode,$currency,$cash);
-        echo $done;
+        $done=$this->outgoingModel->createTransaction(25,$fishId,$weight,$rate,1,$mode,$currency,$cash);
+        if($done) {
+//            $message="<table style='border: 1px solid black; border-collapse: collapse'><tr><th style='border: 1px solid black'>Product_Id</th><th style='border: 1px solid black'>Fish Name</th><th style='border: 1px solid black'>Weight</th><th style='border: 1px solid black'>Rate</th><th style='border: 1px solid black'>Total Cost</th></tr>";
+//            $message=$message."<tr><td style='border: 1px solid black'>".$fishId."</td><td style='border: 1px solid black'>".$fishName."</td><td style='border: 1px solid black'>".$weight."</td><td style='border: 1px solid black'>".$rate." ".$currency."</td><td style='border: 1px solid black'>".($rate*$weight)." ".$currency."</td></tr></table>";
+            $message=$this->getMessage($fishId,$fishName,$rate,$weight,$currency,$mode,$cash,$done);
+            $query= "Invoice";
+            $this->load->library('email');
+            $config['protocol'] = 'smtp';
+            $config['smtp_host'] = 'ssl://smtp.gmail.com';
+            $config['smtp_port'] = '465';
+            $config['smtp_timeout'] = '7';
+            $config['smtp_user'] = 'hexagraph69@gmail.com';
+            $config['smtp_pass'] = 'shaktiman';
+            $config['charset'] = 'utf-8';
+            $config['newline'] = "\r\n";
+            $config['mailtype'] = 'html'; // or html
+            $config['validation'] = TRUE; // bool whether to validate email or not
+
+            $this->email->initialize($config);
+            $this->email->from('hexagraph69@gmail.com.com', 'Invoice');
+            $this->email->to('shinankit1993@gmail.com');
+            // $this->email->cc('another@another-example.com');
+            // $this->email->bcc('them@their-example.com');
+
+            $this->email->subject('Invoice');
+            $this->email->message($message);
+
+            $this->email->send();
+            echo "done";
+        }
+    }
+   
+    private function getMessage($fishId,$fishName,$rate,$weight,$currency,$mode,$cash,$last_id) {
+        if($mode==1){
+            $amountPaid=0;
+            $amountBalance=$weight*$rate;
+        }else if($mode==0) {
+            $amountPaid=$weight*$rate;
+            $amountBalance=0;
+        }else{
+            $amountPaid=$cash;
+            $amountBalance=($weight*$rate)-$cash;
+        }
+
+            $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <!--	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />-->
+        <!--	-->
+        <!--	<title>Editable Invoice</title>-->
+        <!--	-->
+        <!--	<link rel="stylesheet" type="text/css" href="css/style.css" />-->
+        <!--	<link rel="stylesheet" type="text/css" href="css/print.css" media="print" />-->
+        <!--	<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>-->
+        <!--	<script type="text/javascript" src="js/example.js"></script>-->
+    </head>
+    <body style="margin: 0;padding: 0;font: 14px/1.4 Georgia, serif">
+    
+    <div id="page-wrap" style="margin: 0 auto;padding: 0;width: 800px">
+    
+        <textarea id="header" style="margin: 20px 0;padding: 8px 0;border: 0;font: bold 15px Helvetica, Sans-Serif;overflow: hidden;resize: none;height: 15px;width: 100%;background: #222;text-align: center;color: white;text-decoration: uppercase;letter-spacing: 20px">INVOICE</textarea><div id="identity" style="margin: 0;padding: 0">
+    
+            <textarea id="address" style="margin: 0;padding: 0;border: 0;font: 14px Georgia, Serif;overflow: hidden;resize: none;width: 250px;height: 150px;float: left">Marine Plaza
+                123 Appleseed Street
+                Appleville, WI 53719
+    
+                Phone: (555) 555-5555</textarea><div id="logo" style="margin: 0;padding: 0;text-align: right;float: right;position: relative;margin-top: 25px;border: 1px solid #fff;max-width: 540px;max-height: 100px;overflow: hidden">
+    
+        </div>
+    
+        <div style="clear: both;margin: 0;padding: 0"></div>
+    
+        <div id="customer" style="margin: 0;padding: 0;overflow: hidden">
+    
+            <textarea id="customer-title" style="margin: 0;padding: 0;border: 0;font: 14px Georgia, Serif;overflow: hidden;resize: none;font-size: 20px;font-weight: bold;float: left">Widget Corp.
+                c/o Steve Widget</textarea><table id="meta" style="margin: 0;padding: 0;border-collapse: collapse;margin-top: 1px;width: 300px;float: right"><tr style="margin: 0;padding: 0"><td class="meta-head" style="margin: 0;padding: 5px;border: 1px solid black;text-align: left;background: #eee">Invoice #</td>
+                    <td style="margin: 0;padding: 5px;border: 1px solid black;text-align: right"><textarea style="margin: 0;padding: 0;border: 0;font: 14px Georgia, Serif;overflow: hidden;resize: none;width: 100%;height: 20px;text-align: right">'.$last_id.'</textarea></td>
+                </tr><tr style="margin: 0;padding: 0"><td class="meta-head" style="margin: 0;padding: 5px;border: 1px solid black;text-align: left;background: #eee">Date</td>
+                    <td style="margin: 0;padding: 5px;border: 1px solid black;text-align: right"><textarea id="date" style="margin: 0;padding: 0;border: 0;font: 14px Georgia, Serif;overflow: hidden;resize: none;width: 100%;height: 20px;text-align: right">'.date("F j, Y").'</textarea></td>
+                </tr><tr style="margin: 0;padding: 0"><td class="meta-head" style="margin: 0;padding: 5px;border: 1px solid black;text-align: left;background: #eee">Amount Due</td>
+                    <td style="margin: 0;padding: 5px;border: 1px solid black;text-align: right"><div class="due" style="margin: 0;padding: 0">'.$amountBalance.' '.$currency.'</div></td>
+                </tr></table></div>
+    
+        <table id="items" style="margin: 30px 0 0 0;padding: 0;border-collapse: collapse;clear: both;width: 100%;border: 1px solid black"><tr style="margin: 0;padding: 0"><th style="margin: 0;padding: 5px;border: 1px solid black;background: #eee">Fish Id</th>
+                <th style="margin: 0;padding: 5px;border: 1px solid black;background: #eee">Fish Name</th>
+                <th style="margin: 0;padding: 5px;border: 1px solid black;background: #eee">Rate/KG</th>
+                <th style="margin: 0;padding: 5px;border: 1px solid black;background: #eee">Weight</th>
+                <th style="margin: 0;padding: 5px;border: 1px solid black;background: #eee">Total Cost</th>
+            </tr><tr class="item-row" style="margin: 0;padding: 0">
+                <td class="item-name" style="margin: 0;padding: 5px;border: 0;vertical-align: top;width: 175px"><textarea style="margin: 0;padding: 0;border: 0;font: 14px Georgia, Serif;overflow: hidden;resize: none;width: 100%;height: 50px">'.$fishId.'</textarea></td>
+                <td class="description" style="margin: 0;padding: 5px;border: 0;vertical-align: top;width: 300px"><textarea style="margin: 0;padding: 0;border: 0;font: 14px Georgia, Serif;overflow: hidden;resize: none;width: 100%;height: 50px">'.$fishName.'</textarea></td>
+                <td style="margin: 0;padding: 5px;border: 0;vertical-align: top"><textarea class="cost" style="margin: 0;padding: 0;border: 0;font: 14px Georgia, Serif;overflow: hidden;resize: none;width: 80px;height: 50px">'.$rate.' '.$currency.'</textarea></td>
+                <td style="margin: 0;padding: 5px;border: 0;vertical-align: top"><textarea class="qty" style="margin: 0;padding: 0;border: 0;font: 14px Georgia, Serif;overflow: hidden;resize: none;width: 80px;height: 50px">'.$weight.' KG</textarea></td>
+                <td style="margin: 0;padding: 5px;border: 0;vertical-align: top"><span class="price" style="margin: 0;padding: 0">'.$rate*$weight.' '.$currency.'</span></td>
+            </tr><tr style="margin: 0;padding: 0"><td colspan="2" class="blank" style="margin: 0;padding: 5px;border: 0"> </td>
+                <td colspan="2" class="total-line" style="margin: 0;padding: 5px;border: 1px solid black;border-right: 0;text-align: right">Subtotal</td>
+                <td class="total-value" style="margin: 0;padding: 10px;border: 1px solid black;border-left: 0"><div id="subtotal" style="margin: 0;padding: 0">'.$rate*$weight.' '.$currency.'</div></td>
+            </tr><tr style="margin: 0;padding: 0"><td colspan="2" class="blank" style="margin: 0;padding: 5px;border: 0"> </td>
+                <td colspan="2" class="total-line" style="margin: 0;padding: 5px;border: 1px solid black;border-right: 0;text-align: right">Total</td>
+                <td class="total-value" style="margin: 0;padding: 10px;border: 1px solid black;border-left: 0"><div id="total" style="margin: 0;padding: 0">'.$rate*$weight.' '.$currency.'</div></td>
+            </tr><tr style="margin: 0;padding: 0"><td colspan="2" class="blank" style="margin: 0;padding: 5px;border: 0"> </td>
+               <td colspan="2" class="total-line" style="margin: 0;padding: 5px;border: 1px solid black;border-right: 0;text-align: right">Amount Paid</td>
+    
+                <td class="total-value" style="margin: 0;padding: 10px;border: 1px solid black;border-left: 0"><textarea id="paid" style="margin: 0;padding: 0;border: 0;font: 14px Georgia, Serif;overflow: hidden;resize: none;width: 80px;height: 20px;background: none">'.$amountPaid.' '.$currency.'</textarea></td>
+            </tr><tr style="margin: 0;padding: 0"><td colspan="2" class="blank" style="margin: 0;padding: 5px;border: 0"> </td>
+                <td colspan="2" class="total-line balance" style="margin: 0;padding: 5px;border: 1px solid black;border-right: 0;text-align: right;background: #eee">Balance Due</td>
+                <td class="total-value balance" style="margin: 0;padding: 10px;border: 1px solid black;border-left: 0;background: #eee"><div class="due" style="margin: 0;padding: 0">'.$amountBalance.' '.$currency.'</div></td>
+            </tr></table>
+    
+    </div>
+    
+    </body>
+    </html>';
+        return $message;
     }
 
 

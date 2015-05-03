@@ -16,7 +16,7 @@ class LoginModel extends CI_Model{
     public function  getPassword($user_email){
 
         $user_email=$this->db->escape($user_email);
-        $query=$this->db->query("SELECT password,user_type FROM login where user_email={$user_email}");
+        $query=$this->db->query("SELECT * FROM login where user_email={$user_email}");
         return $query->result();
     }
     public function checkEmail($user_email){
